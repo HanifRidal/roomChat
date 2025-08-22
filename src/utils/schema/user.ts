@@ -1,3 +1,4 @@
+import { sign } from "crypto";
 import { z } from "zod";
 
 export const signUpSchema = z.object({
@@ -6,4 +7,10 @@ export const signUpSchema = z.object({
   password: z.string().min(6).max(100),
 });
 
+export const signInSchema = signUpSchema.pick({
+  email: true,
+  password: true,
+});
+
 export type signUpValues = z.infer<typeof signUpSchema>;
+export type signInValues = z.infer<typeof signInSchema>;
