@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { CustomRequest } from "../types/CustomRequest";
-import jwt from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import * as userRepository from "../repositories/userRepositories";
 
 export default async function verifyToken(
