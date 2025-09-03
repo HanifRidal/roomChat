@@ -1,4 +1,3 @@
-import { sign } from "crypto";
 import { z } from "zod";
 
 export const signUpSchema = z.object({
@@ -12,5 +11,17 @@ export const signInSchema = signUpSchema.pick({
   password: true,
 });
 
+export const resetPasswordSchema = z
+  .object({
+    email: z.string().email(),
+    newPassword: z.string().min(6).max(100),
+    confirmPassword: z.string().min(6).max(100),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
 export type signUpValues = z.infer<typeof signUpSchema>;
 export type signInValues = z.infer<typeof signInSchema>;
+export type resetPasswordValues = z.infer<typeof resetPasswordSchema>;
